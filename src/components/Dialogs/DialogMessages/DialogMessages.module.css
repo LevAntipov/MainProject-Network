@@ -1,0 +1,9 @@
+.dialogs__message{
+    grid-area: messages;
+    color:rgb(180, 178, 65);
+    text-align: center;
+}
+
+.dialogs__message__item{
+    margin: 20px 0px;
+}

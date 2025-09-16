@@ -1,0 +1,14 @@
+textarea,button{
+    display: block;
+}
+textarea{
+    width: 30%;
+    height: 8rem;
+    resize: none;
+    
+}
+button{
+    margin-top: 10px;
+    width:100px;
+    height:30px;
+}

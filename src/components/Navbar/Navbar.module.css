@@ -1,0 +1,27 @@
+/* .module для генерации объекта classes, в котором лежат
+  уникальные идентификаторы для css селлекторов */
+
+
+.navigation {
+  grid-area: navigation;
+  background-color: rgba(45, 82, 47, 0.764);
+  min-height: 80vh;
+}
+
+.bar{
+  margin: 10px;
+  text-align: center;
+}
+
+.bar a{
+  color: rgb(238, 245, 205);
+  text-decoration: none;
+}
+
+.bar .activeLink{
+  color: rgb(50, 227, 230);
+}
+
+
+
+

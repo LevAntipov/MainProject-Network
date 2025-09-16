@@ -1,0 +1,23 @@
+.pagContainer div{
+    display: inline-block;
+}
+.pages{
+
+}
+.currentPage{
+    font-size: large;
+    color: aqua;
+    font-weight: bold;
+}
+.page{
+
+}
+.page, .currentPage {
+  display: inline-block;
+  min-width: 2.9ch;   /* ширина под 2–3 цифры */
+  text-align: center;
+}
+
+.q:disabled{
+    opacity: 0.5;
+}

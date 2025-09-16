@@ -1,0 +1,192 @@
+/* --- базовые стили оставляем как есть --- */
+
+.card {
+  height: 250px;
+  width: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* фон карточки — посветлее */
+  background: linear-gradient(135deg, #2b2d4a, #35375c, #40426b);
+  border: 1px solid #444;
+  color: #f0f0f0;
+}
+
+.cardImgWrapper {
+  border-radius: 8px;
+  height: 200px;
+  width: 180;
+  overflow: hidden;
+}
+
+.cardImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top; /* сместить фокус вверх, чтобы не резало голову */
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+}
+
+.cardDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 95px;
+}
+
+.cardName {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.cardStatus {
+  font-size: 14px;
+  color: #b8b8b8; /* мягко тусклее */
+}
+
+.followButton {
+  background-color: #5FBF88; /* зелёный */
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.followButton:hover {
+  background-color: #4fa878; /* темнее на hover */
+}
+
+.unfollowButton {
+  background-color: #E26D6D; /* красный */
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.unfollowButton:hover {
+  background-color: #cc5555; /* темнее на hover */
+}
+
+.learnMoreButton {
+  background-color: #5C6BC0; /* фиолетово-синий */
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.learnMoreButton:hover {
+  background-color: #4956a3;
+}
+
+a{
+    text-decoration: none;
+}
+
+
+/* ===================== SKELETON ===================== */
+
+/* shimmer keyframes */
+@keyframes pulse {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+/* Общие стили для скелетон-блоков */
+.smPrimaryItem,
+.smSecondaryItem {
+  position: relative;
+  display: block;
+  border-radius: 6px;
+  overflow: hidden;
+  user-select: none;
+
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.smPrimaryItem {
+   background: linear-gradient(
+    90deg,
+    #3a3c5c 25%,
+    #474a6e 37%,
+    #3a3c5c 63%
+  );
+}
+
+/* текст — немного светлее */
+.smSecondaryItem {
+  background: linear-gradient(
+    90deg,
+    #50537a 25%,
+    #5c6090 37%,
+    #50537a 63%
+  );
+}
+
+/* ВАЖНО: плейсхолдер картинки должен занять всю обёртку */
+.cardImgWrapper :global(.smPrimaryItem),
+.cardImgWrapper .smPrimaryItem {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+/* Плейсхолдеры текста (имена/статусы) — задаём явные размеры */
+.cardName.smSecondaryItem {
+  /* высота строки имени */
+  height: 18px;
+  width: 70%;          /* визуально покороче, как текст */
+  color: transparent;  /* скрываем реальный текст, оставляя место */
+}
+
+.cardStatus.smSecondaryItem {
+  height: 14px;
+  width: 90%;
+  color: transparent;
+}
+
+/* На всякий случай скрываем любые потомки во время скелетона */
+.smSecondaryItem * { visibility: hidden; }
+
+/* Доступность: скрытая подпись для скринридеров */
+.smSecondaryItem::before,
+.smPrimaryItem::before {
+  content: "Loading, please wait.";
+  position: absolute;
+  inset: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* ------------------ (опционально) тёмная тема ------------------ */
+/* Если хочешь поддержку тёмной темы — раскомментируй и добавь класс .dark на корневой контейнер */
+
+/* .dark .smPrimaryItem,
+.dark .smSecondaryItem {
+  background: linear-gradient(
+    90deg,
+    rgba(60, 60, 60, 0.35) 25%,
+    rgba(80, 80, 80, 0.55) 37%,
+    rgba(60, 60, 60, 0.35) 63%
+  );
+} */
+

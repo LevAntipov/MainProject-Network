@@ -1,0 +1,55 @@
+.profile {
+    display: grid;
+    grid-template-columns: 30% 60% 10%;
+}
+
+.profile__img {
+    margin: 20px 0px 0px 20px;
+    width: 100%;
+    border-radius: 99%;
+    border: 5px white solid;
+}
+
+/* .profile-info {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 33% 33% 33%;
+    align-items: center;
+    padding-left: 100px;
+} */
+
+.profile-info__img {
+    width: 60%;
+}
+
+.profile-info{
+    align-items: center;
+    color: wheat;
+    padding: 20px 0px 0px 50px;
+}
+
+.profile-info div{
+    margin-top: 5px;
+}
+
+.private-info{
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+.private-info .profile-info__item{
+    align-items: center;
+}
+
+.contact{
+    padding-left: 10px;
+}
+
+.validationError {
+    color: #bf1650;
+}
+
+.validationError::before {
+    display: inline;
+    content: "⚠ ";
+}

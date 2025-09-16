@@ -1,0 +1,55 @@
+.usersWrapper{
+    height: 100%;
+}
+
+.cardsWrapper{
+    height: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+
+.user-icon {
+   margin: 0 auto;
+   text-align: center;
+   margin-left: 10px;
+   margin-bottom: 10px;
+}
+
+.user-icon img{
+    width: 75px;
+    height:75px;
+    border-radius: 99%;
+}
+
+.user-info{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    color: antiquewhite;
+}
+
+.user-name{
+    display: grid;
+    grid-template-rows: 50% 50%;
+    padding: 10px;
+}
+
+.user-location{
+    display: grid;
+    grid-template-rows: 50% 50%;
+    padding: 20px;
+    text-align: end;
+}
+
+.current-page{
+    font-size: large;
+    color: aqua;
+    font-weight: bold;
+}
+
+.q:disabled{
+    opacity: 0.5;
+}
