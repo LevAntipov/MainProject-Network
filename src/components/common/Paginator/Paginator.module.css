@@ -1,23 +1,75 @@
-.pagContainer div{
-    display: inline-block;
-}
-.pages{
-
-}
-.currentPage{
-    font-size: large;
-    color: aqua;
-    font-weight: bold;
-}
-.page{
-
-}
-.page, .currentPage {
-  display: inline-block;
-  min-width: 2.9ch;   /* ширина под 2–3 цифры */
-  text-align: center;
+.pagination {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0 10px 10px;
 }
 
-.q:disabled{
-    opacity: 0.5;
+/* кнопки Prev и Next */
+.paginationBtn {
+  background-color: #6C63FF; /* фиолетовый акцент */
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+  margin: 0;
+}
+
+.paginationBtn:hover:not(:disabled) {
+  background-color: #5a52e0; /* чуть темнее на hover */
+}
+
+.paginationBtn:disabled {
+  background-color: #55577d; /* приглушённый */
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* блок с цифрами */
+.pagination {
+  display: flex;
+  gap: 6px;
+}
+
+.page,
+.currentPage {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  min-width: 32px;   /* 👉 фиксированная ширина под цифры */
+  height: 32px;
+
+  padding: 0 6px;    /* чтобы не было слишком тесно */
+  border-radius: 6px;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-weight: 500;
+}
+
+.page {
+  color: #e0e0e0;
+}
+
+.page:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.currentPage {
+  background-color: #6C63FF;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+
+/* обёртки для стрелок (чтобы можно было центрировать/сдвигать) */
+.pastButton,
+.nextButton {
+  display: flex;
+  align-items: center;
 }

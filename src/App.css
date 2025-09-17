@@ -1,17 +1,50 @@
-.app-wrapper {
-  display: grid;
-  width: 1200px;
-  margin: 0 auto;
-
-  grid-template-rows: 60px ;
-  grid-template-columns: 2fr 10fr;
-  grid-gap: 5px;
-  grid-template-areas:
-    "header header"
-    "navigation content";
+/* Сброс */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+html, body, #root {
+  height: 100%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #2f3050;
+  color: #e0e0e0;
+  display: flex;
+  justify-content: center; /* чтобы контейнер был по центру */
+}
+
+/* Корневой контейнер */
+.app-wrapper {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "navbar content";
+  grid-template-rows: 60px 1fr;
+  grid-template-columns: 200px 1fr;
+
+  width: 1200px;   /* 👉 фикс ширина */
+  height: 100vh;
+  background-color: #2f3050;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* аккуратная тень */
+}
+
+/* Хедер */
+.app-wrapper header {
+  grid-area: header;
+}
+
+/* Навбар */
+.app-wrapper nav {
+  grid-area: navbar;
+  background-color: #2f3050;
+}
+
+/* Контент */
 .app-wrapper-content {
   grid-area: content;
-  background-color: #24175ed0
+  padding: 20px;
+  background-color: #40426b;
+  overflow-y: auto;
+  border-left: 2px solid #2f3050;
 }

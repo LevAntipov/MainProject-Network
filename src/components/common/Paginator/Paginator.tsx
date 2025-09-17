@@ -35,18 +35,18 @@ let Paginator: FC<PropsType> = ({ totalItemsCount, pageSize, onPageChanged, curr
     }
 
     return (
-        <div className={classes.pagContainer}>
+        <div className={classes.pagination}>
             
             <div className={classes.pastButton}>
                 
-                    <button onClick={pastportion} disabled={portion > 1 ? false : true}>Prev</button>
+                    <button className={classes.paginationBtn} onClick={pastportion} disabled={portion > 1 ? false : true}>Prev</button>
             </div>
 
             <div className={classes.pages}>
                  {pages
                 .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                 .map(page => {
-                    return <span onClick={() => onPageChanged(page)} key={page}
+                    return <span  onClick={() => onPageChanged(page)} key={page}
                         className={currentpage === page
                             ? classes.currentPage
                             : classes.page}> {page} </span>
@@ -55,7 +55,7 @@ let Paginator: FC<PropsType> = ({ totalItemsCount, pageSize, onPageChanged, curr
 
             <div className={classes.nextButton}>
                 {portionCount > portion &&
-                    <button onClick={nextportion}>Next</button>}
+                    <button className={classes.paginationBtn} onClick={nextportion}>Next</button>}
             </div>
             
         </div>
