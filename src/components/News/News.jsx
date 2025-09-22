@@ -29,43 +29,105 @@ import { requestUsers } from "../../redux/usersReducer";
 
 
 function News() {
-    let dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(requestUsers({ page: 1, pageSize: 4 }))
-    }, [])
-    let users = useSelector((state) => state.usersPage.users)
+    const [pName, setPName] = useState("")
+    const pokemons0 = [
+        { id: 1, name: "charmander" },
+        { id: 2, name: "pikachu" },
+        { id: 4, name: "pikapikachu" },
+        { id: 3, name: "bulbozavr" }]
+    const [similarPokemons, setPokemos] = useState({})
+
+    // function choosePokemon(e){
+    //     let newobj = {}
+    //     let partPokemonName = e.target.value
+    //     pokemons0.forEach((pokemon)=>{
+    //         if(partPokemonName != '' && pokemon.name.indexOf(partPokemonName) == 0){
+    //             if(!similarPokemons[pokemon.id]){
+    //                 newobj[pokemon.id] = pokemon
+    //             }
+    //         }
+    //     })
+    //     setPName(partPokemonName)
+    //     setPokemos(newobj)
+    // }
+    function choosePokemon(e) {
+        let partPokemonName = e.target.value;
+        let newobj = {};
+
+        if (partPokemonName !== "") {
+            pokemons0.forEach((pokemon) => {
+                if (pokemon.name.indexOf(partPokemonName) === 0) {
+                    newobj[pokemon.id] = pokemon;
+                }
+            });
+        }
+
+        setPName(partPokemonName);
+        setPokemos(newobj);
+    }
+    const obj = {
+        person: {
+            name: "Leva",
+            surname: null,
+            biologicalProp: {
+                height: 185,
+                weight: null
+            },
+            location: {
+                country: "Russia"
+            }
+        },
+        id: null
+    }
+    let arr = []
+    function detectNull(obj, parentKey = '') {
+        let arrOfNull = [];
+
+        for (let key in obj) {
+            const value = obj[key];
+            const path = parentKey ? `${parentKey}.${key}` : key; // собираем путь
+
+            if (value === null) {
+                arrOfNull.push(path);
+            } else if (
+                typeof value === "object" &&
+                value !== null &&
+                !Array.isArray(value)
+            ) {
+                arrOfNull = arrOfNull.concat(detectNull(value, path));
+            }
+        }
+
+        return arrOfNull;
+    }
+    
+    function findNull(obj, parentKey=''){
+        let newArr = [] //person.surname
+        for(let i in obj){
+            let newPath = parentKey ? `${parentKey}.${i}` : i
+            if(obj[i] == null){
+                newArr.push(newPath)
+            }
+            if(obj[i] !== null && obj[i].__proto__ === Object.prototype){
+                newArr = newArr.concat(findNull(obj[i],newPath))
+            }
+        }
+        return newArr
+    }
+
+
+    console.log(findNull(obj))
     return (
-        // <div className={classes['user-card']}>
-        //     <div className={classes['user-icon']}>
-        //         <NavLink to={'/profile/' + user.id}>
-        //             <img alt="" src={user.photos.small == null ? noPhotoUser : user.photos.small} />
-        //         </NavLink>
-        //         <div>
-        //             {user.followed === true
-        //                 ? <button disabled={followingInProgress.some(id => id === user.id)} onClick={() => (dispatch as any)(followUnfollowFlow({ user, shouldFollow: false }))}>unFollow</button>
-        //                 : <button disabled={followingInProgress.some(id => id === user.id)} onClick={() => (dispatch as any)(followUnfollowFlow({ user, shouldFollow: true }))}>Follow</button>}
-        //         </div>
-        //     </div>
-        //     {(serverError.userId === user.id)
-        //         ? <div><h1>Something wrong!</h1></div>
-        //         : <div className={classes['user-info']}>
-        //             <div className={classes['user-name']}>
-        //                 <div>{user.name}</div>
-        //                 <div>{user.status == null ? 'no status' : user.status}</div>
-        //             </div>
-        //             <div className={classes['user-location']}>
-        //                 <div>{"user.location.city"}</div>
-        //                 <div>{"user.location.country"}</div>
-        //             </div>
-        //         </div>}
-        // </div>
-
-
-        
-
-        <div className={classes.userCard}>
-            <img className={classes.userImg} src="https://rgo.ru/upload/content_block/images/05ea58e9ad632e4c0ccb746048afe4cd/6409b809f3362efbc6291d259feab33fb.jpg"></img>
-            <div>Name</div>
+        <div>
+            <input value={pName}
+                onChange={(e) => choosePokemon(e)}
+                placeholder="Введите покемона"
+            ></input>
+            <div>
+                {Object.values(similarPokemons).map((item) => {
+                    return <div key={item.id}>{item.name}</div>
+                })}
+            </div>
         </div>
     )
 

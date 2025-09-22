@@ -18,6 +18,7 @@ let User: FC<PropsType> = ({ user, key, followingInProgress }) => {
     const dispatch = useDispatch()
     // @ts-ignore
     const { serverError } = useSelector(state => state.usersPage)
+    
     return (
         <div className={classes['user-card']}>
             <div className={classes['user-icon']}>

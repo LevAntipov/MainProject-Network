@@ -18,7 +18,8 @@ export const LoginForm = ({ login, validationMessage,captchaUrl }) => {
     const onSubmit = async (data) => {
 
         const response = await login({email:data.email,password: data.password,captchaValue:data.captchaValue})
-        if (response === 1) {
+
+        if (response.resultCode === 1) {
             setError('root.serverError', {
                 type: 1,
                 message: "invalid email or password"

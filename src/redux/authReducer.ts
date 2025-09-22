@@ -60,8 +60,10 @@ export const login = createAsyncThunk(
         }
         if (response.data.resultCode === 10) {
             dispatch(getCaptchaUrl())
+            dispatch(incorrectValidationOfUserData(response.data.messages))
         }
         else{
+            dispatch(incorrectValidationOfUserData(response.data.messages))
             return response.data.resultCode
         }
         }
@@ -74,14 +76,14 @@ export const login = createAsyncThunk(
 
 export const getCaptchaUrl = createAsyncThunk(
     'authreducer/getCaptchaUrl',
-    async function({},{rejectWithValue,dispatch}){
+    async function(_,{rejectWithValue,dispatch}){
         try {
             const response = await securityAPI.getCaptcha()
-            dispatch(getCaptchaUrlSuccess(response.data.url))
+            dispatch(getCaptchaUrlSuccess(response.data.url))   
         } catch (error) {
             
         }
-        
+        return 0
     }
 )
 

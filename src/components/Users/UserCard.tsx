@@ -20,7 +20,7 @@ type followUnfollowFlowType = {
 }
 
 
-const UserCard: FC<PropsType> = React.memo(({isFetching, followUnfollowFlow,id }) => {
+const UserCard: FC<PropsType> = React.memo(({isFetching, followUnfollowFlow, id }) => {
 
     const [subMode, setSubMode] = useState(false)
     const dispatch = useDispatch()

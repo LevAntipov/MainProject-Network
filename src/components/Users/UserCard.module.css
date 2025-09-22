@@ -59,6 +59,7 @@
   cursor: pointer;
   font-weight: 600;
   transition: background-color 0.2s ease;
+  width: 50%;
 }
 
 .followButton:hover {
@@ -74,10 +75,16 @@
   cursor: pointer;
   font-weight: 600;
   transition: background-color 0.2s ease;
+  width: 50%;
 }
 
 .unfollowButton:hover {
   background-color: #cc5555; /* темнее на hover */
+}
+
+.followButton:disabled,
+.unfollowButton:disabled{
+  background-color: #787dcb70;
 }
 
 .learnMoreButton {

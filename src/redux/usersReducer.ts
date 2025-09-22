@@ -148,6 +148,7 @@ export const usersReducer = createSlice({
             .addCase(followUnfollowFlow.rejected, (state, action) => {
                 const { user } = action.meta.arg
                 state.serverError = { userId: user.id, status: true }
+                state.followingInProgress = state.followingInProgress.filter((id) => id !== user.id)
             })
     }
 })

@@ -83,7 +83,7 @@ export const profileAPI = {
 
 export type MeReponseType = {
     data:{id: number, email: string, login: string},
-    resultCode: number ,
+    resultCode: number,
     messages: Array<string>
 }
 
@@ -108,7 +108,7 @@ export const authAPI = {
 export const securityAPI = {
     getCaptcha(){
         return (
-            instance.get('/security/get-captcha-url')
+            instance.get('security/get-captcha-url')
         )
     }
 }
