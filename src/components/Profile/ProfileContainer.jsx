@@ -14,8 +14,6 @@ const ProfileContainer = (props) =>{
     useEffect(()=>{
         let userId = props.profileId
         if (!userId) {
-          //  userId=2
-        
             userId = props.authorizedUserId
             if(!userId){
                 navigate('/login')
@@ -30,7 +28,7 @@ const ProfileContainer = (props) =>{
     },[props.isAuth,navigate])         
         return (
             <div>
-                <Profile {...props} profile={props.userProfile} status ={props.userStatus}
+                <Profile {...props} profile={props.userProfile} status ={props.userStatus} isFetching={props.isFetching}
                                     updateUserStatus = {props.updateUserStatus} updateUserPhoto={props.updateUserPhoto}
                                     isOwner = {!props.profileId} updateUserProfile={props.updateUserProfile}
                                     authorizedUserId = {props.authorizedUserId} incorrectUrlFormat = {props.incorrectUrlFormat} />
@@ -46,7 +44,8 @@ const mapStateToProps = (state) => {
         userStatus: state.profilePage.userStatus,
         authorizedUserId: state.auth.userId,
         isAuth:state.auth.isAuth,
-        incorrectUrlFormat:state.profilePage.incorrectUrlFormat
+        incorrectUrlFormat:state.profilePage.incorrectUrlFormat,
+        isFetching:state.profilePage.isFetching
     }
 }
 

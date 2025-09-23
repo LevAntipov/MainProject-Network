@@ -1,80 +1,157 @@
-import classes from "./ProfileInfo.module.css"
-import React, {useState} from "react"
-import preloader from './../../../assets/images/loader.svg'
-import ProfileStatusWithHooks from "./ProfileStatusWithHooks"
-import noPhotoUser from "./../../../assets/images/noPhotoUser3.png"
-import settingsIcon from './../../../assets/images/settingsIcon.png'
-import { ProfileDataForm } from "./ProfileDataForm"
-
-//updateUserPhoto
+import React, { useState } from "react";
+import classes from "./ProfileInfo.module.css";
+import preloader from "./../../../assets/images/loader.svg";
+import noPhotoUser from "./../../../assets/images/noPhotoUser3.png";
+import settingsIcon from "./../../../assets/images/settingsIcon.png";
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
+import { ProfileDataForm } from "./ProfileDataForm";
 
 function ProfileInfo(props) {
-
-    const [editMode, setEditMode] = useState(false)
+    const [editMode, setEditMode] = useState(false);
 
     const savePhoto = (e) => {
-        props.updateUserPhoto(e.target.files[0])
-    }
+        if (e.target.files && e.target.files.length) {
+            props.updateUserPhoto(e.target.files[0]);
+        }
+    };
 
-    const onSubmit = async(data) => {
-        let response = await props.updateUserProfile(data, setEditMode, props.authorizedUserId)
-        if(response){
-            setEditMode(false)
+    const onSubmit = async (data) => {
+        let response = await props.updateUserProfile(
+            data,
+            setEditMode,
+            props.authorizedUserId
+        );
+        if (response) {
+            setEditMode(false);
         }
     };
 
     if (!props.profile) {
-        return <img src={preloader} />
+        return <SkeletonProfile/>;
     }
 
     return (
         <div className={classes.profile}>
-            <div>
-                <img className={`${classes.profile__img} ${classes.profile__item}`} src={props.profile.photos.large || noPhotoUser}></img>
-                {props.isOwner && <input type="file" onChange={savePhoto} />}
+            {/* Фото */}
+            <div className={classes.avatarWrapper}>
+                <img
+                    className={classes.avatar}
+                    src={props.profile.photos.large || noPhotoUser}
+                    alt="avatar"
+                />
+                {props.isOwner && (
+                    <div>
+                        <label className={classes.uploadBtn}>
+                            Загрузить фото
+                            <input type="file" onChange={savePhoto} hidden />
+                        </label>
+                    </div>
+                )}
+                <ProfileStatusWithHooks
+                    status={props.status}
+                    updateUserStatus={props.updateUserStatus}
+                />
             </div>
 
-            {editMode
-                    ? <ProfileDataForm onSubmit={onSubmit} profile={props.profile} incorrectUrlFormat={props.incorrectUrlFormat}/>
-                    :<ProfileBlock profile={props.profile} status={props.status} updateUserStatus={props.updateUserStatus} />}
-            
-            <div>
-                {props.isOwner && !editMode &&<img src={settingsIcon} onClick={()=>setEditMode(true)} width={50}/>}
-                {editMode&& <button onClick={()=>setEditMode(false)}>Save</button>}
+            {/* Информация */}
+            <div className={classes.infoWrapper}>
+                {editMode ? (
+                    <ProfileDataForm
+                        onSubmit={onSubmit}
+                        profile={props.profile}
+                        incorrectUrlFormat={props.incorrectUrlFormat}
+                    />
+                ) : (
+                    <ProfileBlock
+                        profile={props.profile}
+                        status={props.status}
+                        updateUserStatus={props.updateUserStatus}
+                    />
+                )}
+
+                {/* Кнопки */}
+                {props.isOwner && (
+                    <div className={classes.settingsWrapper}>
+                        {!editMode &&
+                            <img
+                                src={settingsIcon}
+                                onClick={() => setEditMode(true)}
+                                width={40}
+                                alt="settings"
+                                className={classes.settingsIcon}
+                            />
+                        }
+                    </div>
+                )}
             </div>
         </div>
-    )
+    );
 }
 
 function ProfileBlock(props) {
     return (
-        <div className={classes['profile-info']}>
-            <div >
-                <b>{props.profile.fullName}</b>
-            </div>
+        <div className={classes.profileInfo}>
+            <h2 className={classes.fullName}>{props.profile.fullName}</h2>
+
             <div>
-                <b>About me</b>: {props.profile.aboutMe || "пока пусто"}
+                <b>Обо мне:</b> {props.profile.aboutMe || "пока пусто"}
             </div>
+
             <div>
-                <b>Looking for a job </b>: {props.profile.lookingForAJob ? "yes" : "пока пусто"}
-                {props.profile.lookingForAJob &&
-                    <div><b>My professional skills </b>: {props.profile.lookingForAJobDescription}</div>}
+                <b>Ищу работу:</b> {props.profile.lookingForAJob ? "Да" : "Нет"}
+                {props.profile.lookingForAJob && (
+                    <div>
+                        <b>Мои навыки:</b> {props.profile.lookingForAJobDescription}
+                    </div>
+                )}
             </div>
+
             <div>
-                <b>Contacts:</b>
-                {Object.keys(props.profile.contacts).map(key => {
-                    if (props.profile.contacts[key]) {
-                        return <Contact key={key} contactTitle={key} contactValue={props.profile.contacts[key]} />
-                    }
-                })}
+                <b>Контакты:</b>
+                <div className={classes.contacts}>
+                    {Object.keys(props.profile.contacts).map((key) => {
+                        if (props.profile.contacts[key]) {
+                            return (
+                                <Contact
+                                    key={key}
+                                    contactTitle={key}
+                                    contactValue={props.profile.contacts[key]}
+                                />
+                            );
+                        }
+                        return null;
+                    })}
+                </div>
             </div>
-            <ProfileStatusWithHooks status={props.status} updateUserStatus={props.updateUserStatus} />
         </div>
-    )
+    );
 }
 
 function Contact({ contactTitle, contactValue }) {
-    return <div><span className={classes.contact}>{contactTitle}: {contactValue}</span></div>
+    return (
+        <div className={classes.contact}>
+            <span>
+                <b>{contactTitle}:</b> {contactValue}
+            </span>
+        </div>
+    );
 }
-//.replace(/\\"/g, '').replace(/"/g, '')
-export default ProfileInfo
+
+export const SkeletonProfile = () => {
+  return (
+    <div className={classes.profile}>
+      <div className={classes.avatarWrapper}>
+        <div className={`${classes.skeleton} ${classes.skeletonAvatar}`}></div>
+        <div className={`${classes.skeleton} ${classes.skeletonLine} short`}></div>
+      </div>
+      <div className={classes.infoWrapper}>
+        <div className={`${classes.skeleton} ${classes.skeletonLine}`}></div>
+        <div className={`${classes.skeleton} ${classes.skeletonLine}`}></div>
+        <div className={`${classes.skeleton} ${classes.skeletonLine}`}></div>
+        <div className={`${classes.skeleton} ${classes.skeletonLine} short`}></div>
+      </div>
+    </div>
+  );
+};
+
+export default ProfileInfo;

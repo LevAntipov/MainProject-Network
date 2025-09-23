@@ -6,7 +6,7 @@ function Profile(props) {
 
     return (
         <div>
-            <ProfileInfo profile = {props.profile} status={props.status} isOwner={props.isOwner}
+            <ProfileInfo profile = {props.profile} status={props.status} isOwner={props.isOwner} isFetching={props.isFetching}
                         updateUserStatus={props.updateUserStatus} updateUserPhoto={props.updateUserPhoto}
                         updateUserProfile={props.updateUserProfile} authorizedUserId={props.authorizedUserId}
                         incorrectUrlFormat={props.incorrectUrlFormat}/>

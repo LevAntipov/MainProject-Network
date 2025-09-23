@@ -9,6 +9,7 @@ const SET_USER_STATUS = "SET-USER-STATUS";
 const DELETE_POST = "DELETE-POST"
 const SET_USER_PHOTO = "SET-USER-PHOTO"
 const INCORRECT_URL_FORMAT = "INCORRECT-URL-FORMAT"
+const SET_IS_FETCHING = "SET-IS-FETCHING"
 
 //redux прогоняет какие-то свои action-ы
 // в начале, при инициализации проекта redux возвращает вместо state - undefined ->
@@ -23,18 +24,19 @@ type ProfilePrivateDataType = {
 
 
 let initialState = {
-    profilePrivateData: {
-        birthsday: "04.06.2002",
-        location: "Moscow",
-        education: "Student",
-    } as ProfilePrivateDataType,
-    postsData: [
-        { id: 1, message: 'Привет!', likesCount: 0, },
-        { id: 2, message: 'Изучаю пропсы', likesCount: 0, },
-    ] as Array<PostsDataType>,
+    // profilePrivateData: {
+    //     birthsday: "04.06.2002",
+    //     location: "Moscow",
+    //     education: "Student",
+    // } as ProfilePrivateDataType,
+    // postsData: [
+    //     { id: 1, message: 'Привет!', likesCount: 0, },
+    //     { id: 2, message: 'Изучаю пропсы', likesCount: 0, },
+    // ] as Array<PostsDataType>,
     userProfile: null as UserprofileType | null,
     userStatus: "пусто",
-    incorrectUrlFormat: true
+    incorrectUrlFormat: true,
+    isFetching:false
 }
 
 type InitialStateType = typeof initialState
@@ -43,27 +45,32 @@ export const profileReducer = (state = initialState, action:any): InitialStateTy
 
     switch (action.type) {
 
-        case (ADD_POST): {
-            debugger
-            return ({
-                ...state,
-                postsData: [...state.postsData, {
-                    id: state.postsData.length + 1,
-                    message: action.postText, 
-                    likesCount: 0,
-                }],
-            })
+        // case (ADD_POST): {
+        //     debugger
+        //     return ({
+        //         ...state,
+        //         postsData: [...state.postsData, {
+        //             id: state.postsData.length + 1,
+        //             message: action.postText, 
+        //             likesCount: 0,
+        //         }],
+        //     })
 
-        }
-        case (DELETE_POST):
-            return ({
-                ...state,
-                postsData: state.postsData.filter((item) => item !== action.postId)
-            })
+        // }
+        // case (DELETE_POST):
+        //     return ({
+        //         ...state,
+        //         postsData: state.postsData.filter((item) => item !== action.postId)
+        //     })
         case (SET_USER_PROFILE):
             return ({
                 ...state,
                 userProfile: action.profile
+            })
+        case (SET_IS_FETCHING):
+            return ({
+                ...state,
+                isFetching: action.isFetching
             })
         case (SET_USER_STATUS):
             return ({
@@ -108,12 +115,22 @@ export const deletePostActionCreator = (postId: number):DeletePostActionCreator 
 }
 type SetUserProfileType = {
     type: typeof SET_USER_PROFILE,
-    profile: UserprofileType
+    profile: UserprofileType | null
 }
-const setUserProfile = (profile:UserprofileType):SetUserProfileType => {
+const setUserProfile = (profile:UserprofileType|null):SetUserProfileType => {
     return {
         type: SET_USER_PROFILE,
         profile
+    }
+}
+type SetIsFetching = {
+    type: typeof SET_IS_FETCHING,
+    isFetching: boolean
+}
+const setIsFetching = (isFetching:boolean):SetIsFetching => {
+    return {
+        type: SET_IS_FETCHING,
+        isFetching
     }
 }
 type SetUserStatusType = {
@@ -146,12 +163,15 @@ const incorrectUrlFormatCorrect = (incorrectUrls:any):any => {
 }
 
 export const getUserProfile = (userId: number) => async (dispatch: any) => {
+    dispatch(setUserProfile(null))
     let response = await usersAPI.getProfile(userId)
     dispatch(setUserProfile(response.data))
 }
 
 export const getUserStatus = (userId: number) => async (dispatch: any) => {
+    dispatch(setIsFetching(true))
     let response = await profileAPI.getStatus(userId)
+    dispatch(setIsFetching(false))
     dispatch(setUserStatus(response.data))
 }
 

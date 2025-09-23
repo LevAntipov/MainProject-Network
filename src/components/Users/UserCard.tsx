@@ -26,7 +26,7 @@ const UserCard: FC<PropsType> = React.memo(({isFetching, followUnfollowFlow, id 
     const dispatch = useDispatch()
     let user = useSelector((state:RootState)=> state.usersPage.entities[id])
     let isBusy = useSelector((state:RootState)=> state.usersPage.followingInProgress.includes(user.id))
-    console.log(`userCard rerender ${user.id}`)
+    let isAuth = useSelector((state:RootState)=>state.auth.isAuth)
 
 
     function followUnfollowClick() {
@@ -56,7 +56,7 @@ const UserCard: FC<PropsType> = React.memo(({isFetching, followUnfollowFlow, id 
                         <NavLink to={'/profile/' + user.id}>
                             <button className={classes.learnMoreButton} >learn more</button>
                         </NavLink>
-                        <button onClick={followUnfollowClick} disabled={isBusy}
+                        <button onClick={followUnfollowClick} disabled={isBusy || !isAuth}
                         className={user.followed ? classes.unfollowButton : classes.followButton}>
                             {user.followed ? "unfollow" : "follow"}
                         </button>

@@ -12,7 +12,7 @@ import Settings from './components/Settings/Settings';
 import UsersContainer from './components/Users/UsersContainer';
 import { connect } from 'react-redux';
 import { initializeApp } from './redux/appReducer';
-import loader from './../src/assets/images/loader.svg'
+import Preloader from '../src/components/common/preloader/AppLoader'
 import { HashRouter, BrowserRouter } from 'react-router';
 import { Navigate } from 'react-router';
 import store from './redux/reduxStore'
@@ -28,16 +28,16 @@ class App extends React.Component {
   }
 
   render() {
-    // if (!this.props.initialized) {
-    //   return <img src={loader} />
-    // }
+    if (!this.props.initialized) {
+      return <Preloader/>
+    }
     return (
       <div className='app-wrapper'>
         <HeaderContainer />
         <Navbar />
         <div className='app-wrapper-content'>
 
-          <React.Suspense fallback={loader}>
+          <React.Suspense fallback={<Preloader/>}>
             <Routes>
               {/* Rout - если путь в браузере совпадает с path, то отрисовывается  element */}
 
@@ -78,7 +78,7 @@ class App extends React.Component {
           </React.Suspense>
 
         </div>
-
+        )
       </div>
 
     );
@@ -101,7 +101,7 @@ let SocialNetwork = () => {
       <BrowserRouter  >
 
         <Provider store={store}>
-          <AppContainer className="dark"/>
+          <AppContainer className="dark" />
         </Provider>
 
       </BrowserRouter>
