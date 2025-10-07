@@ -13,8 +13,8 @@ import UsersContainer from './components/Users/UsersContainer';
 import { connect } from 'react-redux';
 import { initializeApp } from './redux/appReducer';
 import Preloader from '../src/components/common/preloader/AppLoader'
-import { HashRouter, BrowserRouter } from 'react-router';
-import { Navigate } from 'react-router';
+import { HashRouter, BrowserRouter, useParams } from 'react-router';
+import { Navigate,useNavigate } from 'react-router';
 import store from './redux/reduxStore'
 import { Provider } from 'react-redux';
 import News from './components/News/News';
@@ -37,11 +37,14 @@ class App extends React.Component {
         <Navbar />
         <div className='app-wrapper-content'>
 
-          <React.Suspense fallback={<Preloader/>}>
+          <Suspense fallback={<Preloader/>}>
             <Routes>
               {/* Rout - если путь в браузере совпадает с path, то отрисовывается  element */}
 
               <Route path='/' element={
+                <Navigate to='/profile' replace />}
+              />
+              <Route path='/React' element={
                 <Navigate to='/profile' replace />}
               />
 
@@ -62,9 +65,9 @@ class App extends React.Component {
                 <Login />}
               />
 
-              <Route path='/news' element={
+              {/* <Route path='/news' element={
                 <News />}
-              />
+              /> */}
 
               <Route path='*' element={
                 <div>404 NOT FOUND</div>}
@@ -75,7 +78,7 @@ class App extends React.Component {
               {/* <Route path='/settings' Component={Settings} /> */}
 
             </Routes>
-          </React.Suspense>
+          </Suspense>
 
         </div>
         )

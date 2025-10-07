@@ -9,9 +9,9 @@ import SocialNetwork from './App';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(
-       <SocialNetwork/>
-    );
+root.render(
+    <SocialNetwork />
+);
 
 /*
 

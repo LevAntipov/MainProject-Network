@@ -30,9 +30,23 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
-
 .uploadBtn:hover {
   background-color: #5a5ca0; /* светлее на hover */
+}
+
+.backToUsersBtn{
+  margin-top: 10px;
+  flex: 1;
+  background-color: #6c63ff; /* акцент */
+  color: #ffffff;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+.backToUsersBtn:hover {
+  background-color: #5a52e0;
 }
 
 .infoWrapper {

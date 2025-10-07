@@ -5,6 +5,7 @@ import noPhotoUser from "./../../../assets/images/noPhotoUser3.png";
 import settingsIcon from "./../../../assets/images/settingsIcon.png";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import { ProfileDataForm } from "./ProfileDataForm";
+import { NavLink } from "react-router";
 
 function ProfileInfo(props) {
     const [editMode, setEditMode] = useState(false);
@@ -27,7 +28,7 @@ function ProfileInfo(props) {
     };
 
     if (!props.profile) {
-        return <SkeletonProfile/>;
+        return <SkeletonProfile />;
     }
 
     return (
@@ -83,6 +84,10 @@ function ProfileInfo(props) {
                         }
                     </div>
                 )}
+                {!props.isOwner &&
+                    <NavLink to='/users'>
+                        <button className={classes.backToUsersBtn}>Вернуться к просмотру пользователей</button>
+                    </NavLink>}
             </div>
         </div>
     );
@@ -138,20 +143,20 @@ function Contact({ contactTitle, contactValue }) {
 }
 
 export const SkeletonProfile = () => {
-  return (
-    <div className={classes.profile}>
-      <div className={classes.avatarWrapper}>
-        <div className={`${classes.skeleton} ${classes.skeletonAvatar}`}></div>
-        <div className={`${classes.skeleton} ${classes.skeletonLine} short`}></div>
-      </div>
-      <div className={classes.infoWrapper}>
-        <div className={`${classes.skeleton} ${classes.skeletonLine}`}></div>
-        <div className={`${classes.skeleton} ${classes.skeletonLine}`}></div>
-        <div className={`${classes.skeleton} ${classes.skeletonLine}`}></div>
-        <div className={`${classes.skeleton} ${classes.skeletonLine} short`}></div>
-      </div>
-    </div>
-  );
+    return (
+        <div className={classes.profile}>
+            <div className={classes.avatarWrapper}>
+                <div className={`${classes.skeleton} ${classes.skeletonAvatar}`}></div>
+                <div className={`${classes.skeleton} ${classes.skeletonLine} short`}></div>
+            </div>
+            <div className={classes.infoWrapper}>
+                <div className={`${classes.skeleton} ${classes.skeletonLine}`}></div>
+                <div className={`${classes.skeleton} ${classes.skeletonLine}`}></div>
+                <div className={`${classes.skeleton} ${classes.skeletonLine}`}></div>
+                <div className={`${classes.skeleton} ${classes.skeletonLine} short`}></div>
+            </div>
+        </div>
+    );
 };
 
 export default ProfileInfo;
